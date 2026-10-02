@@ -1,0 +1,9 @@
+qa/
+history/
+silent.mp4
+out.mp4
+KPI月報_*.mp4
+audio/*.wav
+audio/gain.txt
+audio/vo/trim/
+render.log

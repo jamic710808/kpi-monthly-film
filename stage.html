@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>KPI 月報 30s</title>
+<style>
+  :root{
+    --bg:#F5F3EE; --ink:#14171A; --mute:#5F5A4F; --line:#D9D4C7;
+    --ok:#0F766E; --warn:#D97706; --bad:#C2410C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+  body{font-family:"Microsoft JhengHei UI","Microsoft JhengHei","Segoe UI",sans-serif;color:var(--ink);position:relative}
+  .abs{position:absolute}
+  .num{font-family:"Segoe UI","Microsoft JhengHei UI",sans-serif;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1}
+  .kicker{font-size:40px;font-weight:700;color:var(--mute);letter-spacing:.08em}
+  .scene{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;will-change:transform,opacity}
+  #bg{position:absolute;inset:0}
+  #grid{position:absolute;inset:-100px;background-image:linear-gradient(var(--line) 2px,transparent 2px),linear-gradient(90deg,var(--line) 2px,transparent 2px);background-size:120px 120px;opacity:.35}
+  #wash{position:absolute;inset:0;background:radial-gradient(1200px 800px at 70% 40%,rgba(217,119,6,.55),rgba(217,119,6,0) 70%);opacity:0}
+  #footer{position:absolute;left:280px;top:1004px;font-size:28px;color:var(--mute);letter-spacing:.06em}
+  #stamp{position:absolute;right:80px;top:52px;font-size:28px;color:var(--mute);letter-spacing:.06em}
+  .pill{position:absolute;border-radius:999px;color:#fff;font-weight:800;white-space:nowrap}
+  .tile{position:absolute;width:480px;height:300px;border-radius:28px;background:#fff;border:3px solid var(--line);padding:32px 36px}
+  .tile .tn{font-size:34px;font-weight:700;color:var(--mute)}
+  .tile .tv{font-size:84px;margin-top:22px}
+  .tile .td{font-size:36px;font-weight:700;margin-top:18px}
+  .dot{position:absolute;border-radius:50%}
+</style>
+</head>
+<body>
+<div id="bg"><div id="grid"></div><div id="wash"></div></div>
+<div id="rail"></div>
+<div id="stamp">2026-09 經營月報</div>
+<div id="footer">示範數據｜虛構公司｜概念影片</div>
+
+<!-- scene 0：結論先行 -->
+<div class="scene" id="s0">
+  <div class="abs kicker" style="left:280px;top:150px">2026 年 9 月・經營月報</div>
+  <div class="abs" style="left:280px;top:240px;font-size:240px;font-weight:900;line-height:1.08;letter-spacing:-.01em">獲利改善，</div>
+  <div class="abs" style="left:280px;top:520px;font-size:240px;font-weight:900;line-height:1.08;letter-spacing:-.01em;color:var(--bad)">現金流亮紅燈</div>
+  <div id="s0dots"></div>
+</div>
+
+<!-- scene 1：營收 -->
+<div class="scene" id="s1">
+  <div class="abs kicker" style="left:280px;top:150px">01　營收</div>
+  <div class="abs num" style="left:280px;top:300px;font-size:60px;color:var(--mute)">NT$</div>
+  <div class="abs" style="left:270px;top:390px;display:flex;align-items:baseline;gap:28px"><span class="num" id="s1v" style="font-size:340px">0.00</span><span id="s1u" style="font-size:150px;font-weight:900">億</span></div>
+  <div class="pill" id="s1chip" style="left:280px;top:790px;height:110px;padding:0 48px;font-size:64px;line-height:110px;background:var(--ok)">YoY +12.3%</div>
+  <div class="abs" id="s1A" style="left:1280px;width:200px;background:#C9C5BB;border-radius:18px 18px 0 0"></div>
+  <div class="abs" id="s1B" style="left:1540px;width:200px;background:var(--ok);border-radius:18px 18px 0 0"></div>
+  <div class="abs" id="s1gap" style="left:1280px;width:460px;border-top:4px dashed var(--ink);height:0"></div>
+  <div class="abs num" id="s1gapl" style="left:1300px;font-size:44px;color:var(--ink)">+0.14 億</div>
+  <div class="abs" style="left:1250px;top:915px;width:260px;text-align:center;font-size:38px;line-height:1.25;color:var(--mute);font-weight:700">去年同期<br>1.14 億</div>
+  <div class="abs" style="left:1510px;top:915px;width:260px;text-align:center;font-size:38px;line-height:1.25;font-weight:800">本月<br>1.28 億</div>
+</div>
+
+<!-- scene 2：毛利率 -->
+<div class="scene" id="s2">
+  <div class="abs kicker" style="left:280px;top:150px">02　毛利率</div>
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080" id="s2svg">
+    <path id="s2track" fill="none" stroke="#E4DFD2" stroke-width="80" stroke-linecap="butt"/>
+    <path id="s2arc" fill="none" stroke="#0F766E" stroke-width="80" stroke-linecap="butt"/>
+    <line id="s2tick" stroke="#14171A" stroke-width="6"/>
+  </svg>
+  <div class="abs" id="s2tl" style="width:340px;font-size:36px;font-weight:700;color:var(--mute);text-align:center">去年同期 34.2%</div>
+  <div class="abs num" style="left:190px;top:822px;font-size:36px;color:var(--mute)">0%</div><div class="abs num" style="left:1120px;top:822px;font-size:36px;color:var(--mute)">50%</div>
+  <div class="abs num" id="s2v" style="left:350px;top:590px;width:700px;text-align:center;font-size:210px">0.0%</div>
+  <div class="abs num" id="s2d" style="left:1270px;top:380px;font-size:170px;color:var(--ok)">+3.6<span style="font-size:110px">pp</span></div>
+  <div class="abs" id="s2c" style="left:1276px;top:590px;font-size:44px;font-weight:700;line-height:1.5">vs 去年同期 34.2%<br><span style="color:var(--mute);font-size:36px">成因：示範（待實際資料）</span></div>
+</div>
+
+<!-- scene 3：營業利益率瀑布 -->
+<div class="scene" id="s3">
+  <div class="abs kicker" style="left:280px;top:150px">03　營業利益率</div>
+  <div class="abs" id="w1" style="left:330px;width:330px;background:var(--ok);border-radius:14px 14px 0 0"></div>
+  <div class="abs" id="w2" style="left:800px;width:330px;background:#8B8578;border-radius:14px"></div>
+  <div class="abs" id="w3" style="left:1270px;width:330px;background:var(--ok);border-radius:14px 14px 0 0"></div>
+  <div class="abs num" id="w1l" style="left:330px;width:330px;text-align:center;font-size:84px">37.8%</div>
+  <div class="abs num" id="w2l" style="left:800px;width:330px;text-align:center;font-size:84px;color:#fff">−25.7<span style="font-size:48px">pp</span></div>
+  <div class="abs num" id="w3l" style="left:1270px;width:330px;text-align:center;font-size:84px">12.1%</div>
+  <div class="abs" style="left:330px;top:925px;width:330px;text-align:center;font-size:42px;font-weight:700">毛利率</div>
+  <div class="abs" style="left:800px;top:925px;width:330px;text-align:center;font-size:42px;font-weight:700;color:var(--mute)">營業費用率</div>
+  <div class="abs" style="left:1270px;top:925px;width:330px;text-align:center;font-size:42px;font-weight:700">營業利益率</div>
+  <div class="abs" id="wc1" style="left:660px;width:140px;border-top:3px dashed var(--mute);height:0"></div>
+  <div class="abs" id="wc2" style="left:1130px;width:140px;border-top:3px dashed var(--mute);height:0"></div>
+  <div class="abs" id="wp" style="left:1250px;width:370px;border-top:5px dashed var(--ink);height:0"></div>
+  <div class="abs" id="wpl" style="left:1630px;width:260px;font-size:30px;font-weight:700;line-height:1.3">去年同期<br><span class="num" style="font-size:44px">9.8%</span></div>
+  <div class="pill" id="wchip" style="left:1270px;top:170px;height:100px;padding:0 44px;font-size:60px;line-height:100px;background:var(--ok)">+2.3pp</div>
+</div>
+
+<!-- scene 4：應收帳款天數 -->
+<div class="scene" id="s4">
+  <div class="abs kicker" style="left:280px;top:150px;color:var(--warn)">04　應收帳款天數　⚠</div>
+  <div class="abs" style="left:270px;top:250px;display:flex;align-items:baseline;gap:28px"><span class="num" id="s4v" style="font-size:420px">68</span><span id="s4u" style="font-size:140px;font-weight:900">天</span></div>
+  <div class="pill" id="s4chip" style="left:1180px;top:330px;height:140px;padding:0 60px;font-size:96px;line-height:140px;background:var(--bad)">+21 天</div>
+  <div class="abs" id="s4trk" style="left:300px;top:740px;width:1400px;height:96px;background:#E4DFD2;border-radius:48px"></div>
+  <div class="abs" id="s4b1" style="left:300px;top:740px;height:96px;background:var(--ink);border-radius:48px 0 0 48px"></div>
+  <div class="abs" id="s4b2" style="top:740px;height:96px;background:var(--bad)"></div>
+  <div id="s4ticks"></div>
+  <div class="abs" id="s4cap" style="left:300px;top:900px;font-size:44px;font-weight:700">去年同期 68 天　<span style="color:var(--bad)">客戶結構變化？需追問</span></div><div class="abs" id="s4prev" style="left:300px;top:660px;font-size:36px;font-weight:800;color:var(--mute)">去年同期 68 天 ▸</div>
+</div>
+
+<!-- scene 5：自由現金流 -->
+<div class="scene" id="s5">
+  <div class="abs kicker" style="left:280px;top:150px;color:var(--bad)">05　自由現金流</div>
+  <div class="abs num" style="left:280px;top:290px;font-size:60px;color:var(--mute)">NT$</div>
+  <div class="abs" style="left:270px;top:390px;display:flex;align-items:baseline;gap:24px"><span class="num" id="s5v" style="font-size:250px;color:var(--bad)">−0</span><span id="s5u" style="font-size:120px;font-weight:900;color:var(--bad)">萬</span></div>
+  <div class="abs" id="s5zero" style="left:1300px;top:300px;width:480px;border-top:5px solid var(--ink)"></div>
+  <div class="abs" id="s5bar" style="left:1420px;top:305px;width:240px;background:var(--bad);border-radius:0 0 18px 18px"></div>
+  <div class="abs" style="left:1300px;top:240px;font-size:32px;font-weight:700;color:var(--mute)">0</div>
+  <div class="abs" id="s5cap" style="left:280px;top:680px;font-size:60px;font-weight:800">獲利成長，但 <span style="color:var(--bad)">capex 衝高</span></div>
+  <div class="abs" id="s5f" style="left:280px;top:790px;display:flex;align-items:center;gap:22px;font-size:48px;font-weight:800;white-space:nowrap"><span style="padding:12px 28px;border-radius:999px;background:#fff;border:3px solid var(--line)">營業現金流</span><span style="color:var(--bad);font-size:60px">−</span><span id="s5fc" style="padding:12px 28px;border-radius:999px;background:var(--bad);color:#fff">capex</span><span style="font-size:60px">＝</span><span style="padding:12px 28px;border-radius:999px;background:#fff;border:3px solid var(--bad);color:var(--bad)">自由現金流</span></div>
+  <div class="abs" id="s5n" style="left:280px;top:900px;font-size:32px;font-weight:700;color:var(--mute)">成因為示範假設，待實際資料確認</div>
+</div>
+
+<!-- scene 6：總覽 -->
+<div class="scene" id="s6">
+  <div class="abs kicker" style="left:280px;top:110px">月報總覽</div>
+</div>
+
+<!-- scene 7：行動 -->
+<div class="scene" id="s7">
+  <div class="abs kicker" style="left:280px;top:130px">下月追蹤</div>
+  <div class="abs" style="left:280px;top:190px;font-size:150px;font-weight:900;letter-spacing:-.01em">先追這兩件事</div>
+  <div id="s7rows"></div>
+  <div class="pill" id="s7cta" style="left:280px;top:850px;height:110px;padding:0 54px;font-size:56px;line-height:110px;background:var(--ink)">下次月會，帶回這兩項的答案</div>
+</div>
+
+<script>
+// ---------- 數學工具：所有動畫都是 t 的純函式（無 rAF / Date.now / random） ----------
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>clamp((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);
+const ei=x=>x*x*x;
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eob=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const $=id=>document.getElementById(id);
+const COL={ok:'#0F766E',warn:'#D97706',bad:'#C2410C',mute:'#B9B3A4'};
+
+const TOTAL=30;
+const B=[3.8,7.9,12.15,15.35,19.15,22.15,25.5];           // 場景邊界
+const W=0.3;                                         // 轉場半窗
+const scenes=[...Array(8).keys()].map(i=>({el:$('s'+i),a:i?B[i-1]:0,b:i<7?B[i]:TOTAL+1}));
+
+// ---------- rail（常駐角色） ----------
+const RAIL=[['營收','ok'],['毛利率','ok'],['營業利益率','ok'],['應收天數','warn'],['自由現金流','bad']];
+const rail=$('rail');
+rail.innerHTML='<div class="abs" id="rline" style="left:118px;top:270px;width:4px;height:540px;background:#D9D4C7"></div><div class="abs" id="rfill" style="left:118px;top:270px;width:4px;height:0;background:#14171A"></div>'+
+  RAIL.map((r,i)=>`<div class="dot" id="rn${i}" style="left:106px;top:${258+i*135}px;width:28px;height:28px;background:#D9D4C7"></div>`).join('');
+
+// ---------- scene 0 狀態燈 ----------
+$('s0dots').innerHTML=RAIL.map((r,i)=>`<div class="dot" id="d${i}" style="left:${284+i*300}px;top:860px;width:46px;height:46px;background:${COL[r[1]]}"></div><div class="abs" style="left:${344+i*300}px;top:856px;font-size:36px;font-weight:700">${r[0]}</div>`).join('');
+
+// ---------- scene 4 ticks ----------
+$('s4ticks').innerHTML=[0,20,40,60,80,100].map(d=>`<div class="abs num" style="left:${300+d*14-60}px;top:850px;width:120px;text-align:center;font-size:34px;color:var(--mute)">${d}</div>`).join('');
+
+// ---------- scene 6 tiles ----------
+const TILES=[
+  ['營收 NT$','1.28 億','YoY +12.3%','ok'],
+  ['毛利率','37.8%','+3.6pp','ok'],
+  ['營業利益率','12.1%','+2.3pp','ok'],
+  ['應收帳款天數','89 天','+21 天','warn'],
+  ['自由現金流 NT$','−2,300 萬','成因待確認','bad'],
+];
+const TX=[280,800,1320], TY=[230,570];
+TILES.forEach((t,i)=>{
+  const d=document.createElement('div');d.className='tile';d.id='tile'+i;
+  d.style.left=TX[i%3]+'px';d.style.top=TY[Math.floor(i/3)]+'px';
+  d.innerHTML=`<div class="dot" style="right:32px;top:36px;width:30px;height:30px;background:${COL[t[3]]}"></div><div class="tn">${t[0]}</div><div class="tv num" style="font-size:84px">${t[1]}</div><div class="td" style="color:${COL[t[3]]}">${t[2]}</div>`;
+  $('s6').appendChild(d);
+});
+const t6=document.createElement('div');t6.className='tile';t6.id='tile5';
+t6.style.left=TX[2]+'px';t6.style.top=TY[1]+'px';t6.style.background='#14171A';t6.style.borderColor='#14171A';
+t6.innerHTML='<div class="tn" style="color:#B9B3A4">結論</div><div class="tv num" style="color:#fff;font-size:120px;margin-top:10px">2 項</div><div class="td" style="color:#fff;font-size:44px">需要追問</div>';
+$('s6').appendChild(t6);
+
+// ---------- scene 7 rows ----------
+const ROWS=[['應收帳款　+21 天','拆解客戶結構與帳齡，找出逾期來源','warn'],['自由現金流　−2,300 萬','盤點 capex 時程，對照回收期','bad']];
+$('s7rows').innerHTML=ROWS.map((r,i)=>`<div class="abs" id="row${i}" style="left:280px;top:${420+i*210}px;width:1500px;height:180px;border-radius:28px;background:#fff;border:3px solid var(--line)">
+  <div class="dot" style="left:40px;top:55px;width:70px;height:70px;background:${COL[r[2]]}"></div>
+  <div class="abs num" style="left:40px;top:55px;width:70px;height:70px;line-height:70px;text-align:center;font-size:44px;color:#fff">${i+1}</div>
+  <div class="abs" style="left:150px;top:20px;font-size:76px;font-weight:900">${r[0]}</div>
+  <div class="abs" style="left:150px;top:112px;font-size:44px;font-weight:700;color:var(--mute)">→ ${r[1]}</div></div>`).join('');
+
+// ---------- gauge helpers ----------
+const GC={x:700,y:800,r:480};
+function gp(f,r){const a=Math.PI*(1-f);return [GC.x+r*Math.cos(a),GC.y-r*Math.sin(a)]}
+function arc(f0,f1){const [x0,y0]=gp(f0,GC.r),[x1,y1]=gp(f1,GC.r);return `M ${x0} ${y0} A ${GC.r} ${GC.r} 0 0 1 ${x1} ${y1}`}
+
+// ---------- 場景內容（u = 場景自己的時間，從場景開始轉入的那刻起算） ----------
+function sc0(t){
+  const s=1+0.03*P(t,0,B[0]);
+  $('s0').firstElementChild.parentElement.style.setProperty('--k',s);
+  [...$('s0').children].forEach(c=>{ if(c.id!=='s0dots') c.style.transform=`scale(${s})` });
+  RAIL.forEach((_,i)=>{ $('d'+i).style.transform=`scale(${1+0.25*Math.sin(t*5+i*1.1)})` });
+}
+function sc1(u){
+  const v=1.28*eo(P(u,0.2,1.3));
+  $('s1v').textContent=v.toFixed(2);
+  const hB=560*eo(P(u,0.35,1.25)), hA=560*(1.14/1.28)*eo(P(u,0.25,1.15));
+  const base=880;
+  $('s1A').style.top=(base-hA)+'px';$('s1A').style.height=hA+'px';
+  $('s1B').style.top=(base-hB)+'px';$('s1B').style.height=hB+'px';
+  const g=eo(P(u,1.3,1.8));
+  const yA=base-560*(1.14/1.28);
+  $('s1gap').style.top=yA+'px';$('s1gap').style.opacity=g;
+  $('s1gapl').style.top=(yA-70)+'px';$('s1gapl').style.opacity=g;
+  const c=eob(P(u,1.1,1.6));
+  $('s1chip').style.transform=`scale(${0.5+0.5*c})`;$('s1chip').style.opacity=clamp(P(u,1.1,1.3));
+}
+function sc2(u){
+  $('s2track').setAttribute('d',arc(0,1));
+  const f=eo(P(u,0.15,1.6))*37.8/50;
+  $('s2arc').setAttribute('d',arc(0,Math.max(f,0.0005)));
+  $('s2v').textContent=(f*50).toFixed(1)+'%';
+  const [x0,y0]=gp(34.2/50,GC.r-62),[x1,y1]=gp(34.2/50,GC.r+62);
+  const tk=eo(P(u,0.9,1.3));
+  $('s2tick').setAttribute('x1',x0);$('s2tick').setAttribute('y1',y0);$('s2tick').setAttribute('x2',x1);$('s2tick').setAttribute('y2',y1);
+  $('s2tick').style.opacity=tk;
+  const [lx,ly]=gp(34.2/50,GC.r+120);
+  $('s2tl').style.left=(lx-170+30)+'px';$('s2tl').style.top=(ly-34)+'px';$('s2tl').style.opacity=tk;
+  const d=eob(P(u,1.5,2.1));
+  $('s2d').style.opacity=clamp(P(u,1.5,1.7));$('s2d').style.transform=`translateX(${(1-d)*-60}px)`;
+  $('s2c').style.opacity=eo(P(u,1.9,2.4));
+}
+function sc3(u){
+  u*=1.15;
+  const base=880,k=14;
+  const h1=37.8*k, h2=25.7*k, h3=12.1*k;
+  const a=eo(P(u,0.15,0.9)), b=eo(P(u,0.9,1.5)), c=eo(P(u,1.5,2.1));
+  const top1=base-h1;
+  $('w1').style.top=(base-h1*a)+'px';$('w1').style.height=(h1*a)+'px';
+  $('w1l').style.top=(base-h1*a-100)+'px';$('w1l').style.opacity=a;
+  $('w2').style.top=top1+'px';$('w2').style.height=(h2*b)+'px';
+  $('w2l').style.top=(top1+h2*b/2-42)+'px';$('w2l').style.opacity=clamp(b*2-.6);
+  const top3=base-h3;
+  $('w3').style.top=(base-h3*c)+'px';$('w3').style.height=(h3*c)+'px';
+  $('w3l').style.top=(base-h3*c-100)+'px';$('w3l').style.opacity=c;
+  $('wc1').style.top=top1+'px';$('wc1').style.opacity=a;
+  $('wc2').style.top=(top1+h2)+'px';$('wc2').style.opacity=b;
+  const p=eo(P(u,2.2,2.6));
+  const yP=base-9.8*k;
+  $('wp').style.top=yP+'px';$('wp').style.opacity=p;
+  $('wpl').style.top=(yP-8)+'px';$('wpl').style.opacity=p;
+  const ch=eob(P(u,2.5,3.0));
+  $('wchip').style.top=(base-h3-215)+'px';$('wchip').style.left='1270px';$('wchip').style.transform=`scale(${0.5+0.5*ch})`;$('wchip').style.opacity=clamp(P(u,2.5,2.7));
+}
+function sc4(u){
+  const px=14, x0=300;
+  const v=68+21*eo(P(u,0.9,1.9));
+  $('s4v').textContent=Math.round(v);
+  $('s4b1').style.width=(68*px*eo(P(u,0.1,0.8)))+'px';
+  const w2=(v-68)*px;
+  $('s4b2').style.left=(x0+68*px)+'px';$('s4b2').style.width=w2+'px';
+  $('s4b2').style.borderRadius=w2>=1400-68*px-1?'0 48px 48px 0':'0';
+  $('s4b2').style.opacity=0.82+0.18*Math.sin(u*9);
+  const c=eob(P(u,1.6,2.2));
+  $('s4chip').style.transform=`scale(${0.5+0.5*c}) rotate(${(1-c)*-6}deg)`;$('s4chip').style.opacity=clamp(P(u,1.6,1.8));
+  $('s4cap').style.opacity=eo(P(u,1.9,2.4));
+  $('s4prev').style.opacity=eo(P(u,0.1,0.4))*(1-eo(P(u,1.2,1.5)));
+}
+function sc5(u){
+  u*=1.25;
+  const v=Math.round(2300*eo(P(u,0.2,1.6)));
+  $('s5v').textContent='−'+v.toLocaleString('en-US');
+  $('s5bar').style.height=(620*eo(P(u,0.2,1.6)))+'px';
+  $('s5cap').style.opacity=eo(P(u,1.5,2.1));
+  $('s5cap').style.transform=`translateY(${(1-eo(P(u,1.5,2.1)))*30}px)`;
+  const f=eo(P(u,2.3,2.9));
+  $('s5f').style.opacity=f;$('s5f').style.transform=`translateY(${(1-f)*40}px)`;
+  $('s5fc').style.transform=`scale(${1+0.06*Math.max(0,Math.sin((u-2.9)*5))})`;
+  $('s5n').style.opacity=eo(P(u,2.9,3.4));
+}
+function sc6(u,t){
+  // 牆：6 磚依序進場；u>2.0 時 3 個正常磚退場、2 個警示磚放大
+  for(let i=0;i<6;i++){
+    const el=$('tile'+i);
+    const enter=eob(P(u,0.15+i*0.14,0.7+i*0.14));
+    const hot=(i===3||i===4||i===5);
+    const dimP=eo(P(u,2.0,2.6));
+    let sc=0.7+0.3*enter, op=clamp(P(u,0.15+i*0.14,0.4+i*0.14));
+    let ty=0;
+    if(!hot){ sc*=1-0.1*dimP; op*=1-dimP; ty=-70*dimP }
+    else { sc*=1+0.06*dimP; ty=-170*dimP }
+    el.style.transform=`translateY(${ty}px) scale(${sc})`;el.style.opacity=op;
+    if(i===5){ sc*=1+0.025*Math.sin(u*5); el.style.transform=`translateY(${ty}px) scale(${sc})`; }
+    if(hot){ el.style.borderColor=i===5?'#14171A':COL[TILES[i]?TILES[i][3]:'bad']; el.style.borderWidth=(3+5*dimP)+'px' }
+  }
+}
+function sc7(u){
+  const c=eob(P(u,1.9,2.5));
+  $('s7cta').style.opacity=clamp(P(u,1.9,2.1));
+  $('s7cta').style.transformOrigin='left center';
+  $('s7cta').style.transform=`translateX(${(1-c)*-80}px) scale(${(0.6+0.4*c)*(1+0.02*Math.sin(u*4))})`;
+  for(let i=0;i<2;i++){
+    const p=eo(P(u,0.45+i*0.5,1.0+i*0.5));
+    const el=$('row'+i);el.style.opacity=p;
+    const g=Math.max(0,Math.sin(Math.PI*clamp((u-(1.6+i*1.0))/1.0)));   // 依序點亮，帶出先後順序
+    el.style.transform=`translateX(${(1-p)*120}px) scale(${1+0.02*g})`;
+    el.style.boxShadow=`0 0 0 ${6*g}px ${i?'rgba(194,65,12,.25)':'rgba(217,119,6,.28)'}`;
+  }
+}
+const UPD=[null,sc1,sc2,sc3,sc4,sc5,sc6,sc7];
+
+// ---------- 主 render ----------
+window.init=function(){ return {total:TOTAL}; };
+window.render=function(t){
+  // 背景：緩慢漂移 + 警示期琥珀暈染
+  $('grid').style.transform=`translate(${-(t*64)%120}px,${-(t*36)%120}px)`;
+  $('bg').style.background=`radial-gradient(1400px 900px at ${50+20*Math.sin(t*.35)}% ${45+15*Math.cos(t*.3)}%,#FFFFFF,#F5F3EE 70%)`;
+  const warn=P(t,B[3]-0.4,B[3]+0.4)*(1-P(t,B[5]-0.3,B[5]+0.4));
+  $('wash').style.opacity=warn*0.4;
+
+  // rail 狀態
+  let act=-1;
+  for(let i=1;i<=5;i++){ if(t>=scenes[i].a) act=i-1; }
+  const railOp=1-P(t,B[5]-0.4,B[5]+0.2);
+  $('rail').style.opacity=railOp;
+  RAIL.forEach((r,i)=>{
+    const done=i<act, cur=i===act;
+    const n=$('rn'+i);
+    const col=(done||cur)?COL[r[1]]:'#D9D4C7';
+    n.style.background=col;
+    const sz=cur?44:28;
+    n.style.width=n.style.height=sz+'px';
+    n.style.left=(120-sz/2)+'px';n.style.top=(272+i*135-sz/2)+'px';
+    n.style.boxShadow=cur?`0 0 0 ${8+6*Math.sin(t*6)}px ${col}33`:'none';
+  });
+  const fillH=act<0?0:Math.min(540,act*135);
+  $('rfill').style.height=fillH+'px';
+
+  // 場景可見度與轉場
+  scenes.forEach((S,i)=>{
+    const inP=i===0?1:P(t,S.a-0.06,S.a+0.2);
+    const outP=i===7?0:P(t,S.b-0.22,S.b+0.06);
+    const vis=(i===0||t>=S.a-0.06)&&(i===7||t<=S.b+0.06);
+    S.el.style.display=vis?'block':'none';
+    if(!vis)return;
+    const inE=eo(inP), outE=ei(outP);
+    const push=1+0.06*P(t,S.a,S.b);
+    const scale=(0.94+0.06*inE)*(1+0.45*outE)*push;
+    S.el.style.transform=i===0?'none':`scale(${scale})`;
+    if(i===0) S.el.style.transform=`scale(${1+0.45*outE+0.04*P(t,0,B[0])})`;
+    S.el.style.opacity=(i===0?1:inE)*(1-ei(outP));
+    S.el.style.filter=outP>0?`blur(${ei(outP)*16}px)`:'none';
+    S.el.style.zIndex=20-i;
+    const u=t-S.a+0.12;
+    if(i===0)sc0(t);else UPD[i](u,t);
+  });
+
+};
+</script>
+</body>
+</html>

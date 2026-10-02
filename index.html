@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KPI 月報 30 秒</title>
+<meta name="description" content="30 秒 KPI 月報動態影片（虛構示範數據），含旁白與配樂。">
+<meta property="og:title" content="KPI 月報 30 秒動態影片">
+<meta property="og:description" content="結論先行：獲利改善，現金流亮紅燈。虛構示範數據。">
+<meta property="og:image" content="poster.jpg">
+<style>
+  :root{--bg:#F5F3EE;--ink:#14171A;--mute:#5F5A4F;--line:#D9D4C7;--card:#fff;--accent:#0F766E}
+  @media (prefers-color-scheme:dark){:root{--bg:#14171A;--ink:#F2EFE8;--mute:#B7B2A5;--line:#2B3035;--card:#1C2024;--accent:#2DD4BF}}
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Microsoft JhengHei UI","PingFang TC","Noto Sans TC",system-ui,sans-serif;line-height:1.6}
+  main{max-width:960px;margin:0 auto;padding:32px 16px 56px}
+  h1{font-size:clamp(26px,5vw,40px);font-weight:900;letter-spacing:-.01em}
+  .sub{color:var(--mute);margin:6px 0 20px}
+  video{width:100%;aspect-ratio:16/9;background:#000;border-radius:16px;display:block}
+  .note{margin-top:20px;padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:15px}
+  .note b{color:var(--accent)}
+  ul{margin:10px 0 0 20px;color:var(--mute);font-size:15px}
+  footer{margin-top:28px;color:var(--mute);font-size:14px}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <h1>KPI 月報・30 秒動態影片</h1>
+  <p class="sub">結論先行：獲利改善，現金流亮紅燈</p>
+  <video controls preload="metadata" playsinline poster="poster.jpg" src="video.mp4"></video>
+  <div class="note">
+    <b>示範數據。</b>影片中所有數字與公司皆為虛構，僅用來展示動畫與流程，不是任何真實經營結果。
+    <ul>
+      <li>營收 1.28 億（YoY +12.3%）、毛利率 37.8%、營業利益率 12.1%</li>
+      <li>應收帳款天數 68 → 89 天、自由現金流 −2,300 萬</li>
+      <li>旁白：Gemini 3.8 Flash TTS；配樂與音效為程式生成的原創音訊</li>
+    </ul>
+  </div>
+  <footer>畫面由單一 HTML 以 render(t) 逐格渲染，可重現。原始碼與製作紀錄見 <a href="https://github.com/jamic710808/kpi-monthly-film">GitHub repo</a>。</footer>
+</main>
+</body>
+</html>
